@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script src="index.js" defer></script>
+    <title>Weather App</title>
+</head>
+
+<body>
+    <div class="box">
+        <div class="wave-one"></div>
+        <div class="wave-two"></div>
+        <div class="wave-three"></div>
+        <div id="weatherCond">
+            <i class="fa-solid fa-cloud" style="color: #eccc68;"></i>
+        </div>
+        <div class="info">
+            <!-- <h2 class="location"><i class="fas fa-street-view"></i>{%location%}, {%country%}</h2> -->
+            <h2 class="location"><i class="fas fa-street-view"></i>Delhi, In</h2>
+            <p id="date"></p>
+            <!-- <h1 class="temp">{%tempval%}&deg;C</h1> -->
+            <h1 class="temp">30&deg;C</h1>
+            <!-- <h3 class="tempmin_max">Min {%tempmin%} | Max {%tempmax%}</h3> -->
+            <h3 class="tempmin_max">Min 29&deg;C | Max 35&deg;C</h3>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const curDate = document.getElementById("date");
+            let weatherCond = document.getElementById("weatherCond");
+
+            const tempStatus = "{%tempstatus%}";
+            if (tempStatus === "Sunny") {
+                weatherCond.innerHTML = "<i class='fa-solid fa-sun' style='color: #eccc68; font-size: 23rem;'></i>";
+            } else if (tempStatus === "Clouds") {
+                weatherCond.innerHTML = "<i class='fa-solid fa-cloud' style='color: #dfe4ea; font-size: 23rem;'></i>";
+            } else if (tempStatus === "Rainy") {
+                weatherCond.innerHTML = "<i class='fa-solid fa-cloud-rain' style='color: #a4b0be; font-size: 23rem;'></i>";
+            } else {
+                weatherCond.innerHTML = "<i class='fa-solid fa-cloud' style='color: #44c3de; font-size: 23rem;'></i>";
+            }
+
+            const getCurrentDay = () => {
+                const weakday = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+                let currentTime = new Date();
+                let day = weakday[currentTime.getDay()];
+                return day;
+            };
+
+            const getCurrentTime = () => {
+                const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+                let now = new Date();
+                let date = now.getDate();
+                let month = months[now.getMonth()];
+                let year = now.getFullYear();
+                let hours = now.getHours();
+                let mins = now.getMinutes();
+                let period = "AM";
+                if (hours > 11) {
+                    period = "PM";
+                    if (hours > 12) hours -= 12;
+                }
+                if (mins < 10) {
+                    mins = "0" + mins;
+                }
+                return `${month}-${date}-${year} |  ${hours}:${mins}${period}`;
+            };
+
+            curDate.innerHTML = getCurrentDay() + " | " + getCurrentTime();
+        });
+
+    </script>
+</body>
+
+</html>
